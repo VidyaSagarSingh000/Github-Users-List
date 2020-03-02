@@ -12,4 +12,4 @@ This is the list of all git users in Bangalore.
     Api : https://api.github.com/search/users
 
 ### URL:
-    https://github-users-list.netlify.com/
+   https://github-users-list.netlify.com/
