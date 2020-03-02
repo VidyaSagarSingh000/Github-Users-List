@@ -1,18 +1,20 @@
 section {
   display: flex;
   height: 50px;
-  align-items: center;
-  padding: 20px 50px;
+  
+  padding: 20px 0;
 }
 
 input {
-  margin: auto;
   display: block;
-  width: 100%;
+  width: 80%;
   height: 30px;
-  padding:10px;
+  padding: 10px;
   border: 2px solid #dc004e;
+  margin-right: 50px;
   border-radius: 5px;
   font-size: medium;
   outline: none;
 }
+
+

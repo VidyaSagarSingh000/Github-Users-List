@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
 import Table from "./components/table";
-import Spinner from "./components/Spinner/Spinner";
-import axios from "axios";
+
 
 class App extends Component {
   render() {

@@ -2,12 +2,11 @@ import * as actionTypes from "../actions/actionTypes";
 
 const initialState = {
   users: [],
-  isLoading: false,
-  filteredUser:[]
+  isLoading: false
 };
 
 const reducer = (state = initialState, action) => {
-  console.log("reudcer");
+  console.log("reducer");
   switch (action.type) {
     case actionTypes.FETCH_USERS_START:
       return {
@@ -19,11 +18,6 @@ const reducer = (state = initialState, action) => {
         ...state,
         users: action.users.items,
         isLoading: false
-      };
-    case actionTypes.SEARCH_USER_SUCCESS:
-      return {
-        ...state,
-        filteredUser:action.user
       };
     default:
       return state;

@@ -34,10 +34,11 @@ const styles = {
 
 class table extends Component {
   state = {
-    currentPage: 2,
+    currentPage: 1,
     search: ""
   };
   componentDidMount() {
+    
     this.props.onFetchUsers(this.state.currentPage);
   }
 
@@ -45,19 +46,20 @@ class table extends Component {
     if (prevState.currentPage !== this.state.currentPage) {
       this.props.onFetchUsers(this.state.currentPage);
     }
-
-    if (prevState.search !== this.state.search) {
-      this.props.onFilterUser(this.state.search);
-    }
   }
 
   inputChange = e => {
-    const updatedObj = {
-      ...this.state
-    };
-    updatedObj.search = e.target.value;
-    this.setState({ state: updatedObj });
+    this.setState({ search: e.target.value });
   };
+
+  onSubmitHandler = event => {
+    if (this.state.search.length > 0) {
+        this.props.onFilterUser(this.state.search); //this.state.currentPage
+      } else {
+        alert("please enter name");
+      }
+    };
+
   pageChangeHandler = (event, page) => {
     this.setState({ currentPage: page });
   };
@@ -68,25 +70,25 @@ class table extends Component {
     // );
     let gitUser = <Spinner />;
     if (!this.props.loading) {
-      if (this.state.search.length > 0) {
-        gitUser = this.props.filteredUsers.map(user => (
-          <TableRow key={user.id}>
-            <TableCell align="center">
-              <Avatar
-                src={user.avatar_url}
-                alt={user.login}
-                variant="rounded"
-              />
-            </TableCell>
-            <TableCell align="center">
-              <Typography variant="subtitle1">{user.login}</Typography>
-            </TableCell>
-            <TableCell align="center">
-              <Typography variant="subtitle1">{user.id}</Typography>
-            </TableCell>
-          </TableRow>
-        ));
-      }
+      // if (this.state.search.length > 0) {
+      //   gitUser = this.props.users.map(user => (
+      //     <TableRow key={user.id}>
+      //       <TableCell align="center">
+      //         <Avatar
+      //           src={user.avatar_url}
+      //           alt={user.login}
+      //           variant="rounded"
+      //         />
+      //       </TableCell>
+      //       <TableCell align="center">
+      //         <Typography variant="subtitle1">{user.login}</Typography>
+      //       </TableCell>
+      //       <TableCell align="center">
+      //         <Typography variant="subtitle1">{user.id}</Typography>
+      //       </TableCell>
+      //     </TableRow>
+      //   ));
+      // }
       gitUser = this.props.users.map(user => (
         <TableRow key={user.id}>
           <TableCell align="center">
@@ -103,7 +105,11 @@ class table extends Component {
     }
     return (
       <div style={{ display: "flex", flexDirection: "column" }}>
-        <SearchBar changed={this.inputChange} value={this.state.search} />
+        <SearchBar
+          changed={this.inputChange}
+          value={this.state.search}
+          onSubmit={event => this.onSubmitHandler(event)}
+        />
         <div>
           <TableContainer component={Paper}>
             <Table className={classes.table} aria-label="simple table">
@@ -136,14 +142,13 @@ class table extends Component {
 const mapStateToProps = state => {
   return {
     users: state.users.users,
-    loading: state.users.isLoading,
-    filteredUser: state.users.filteredUser
+    loading: state.users.isLoading
   };
 };
 const mapDispatchToProps = dispatch => {
   return {
     onFetchUsers: page => dispatch(actions.fetchUsers(page)),
-    onFilterUser: query => dispatch(actions.filterUser(query))
+    onFilterUser: (query) => dispatch(actions.filterUser(query)) //
   };
 };
 

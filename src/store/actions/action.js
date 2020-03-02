@@ -37,17 +37,17 @@ export const fetchUsers = pageNumber => {
   };
 };
 
-export const searchUserSuccess = user => {
-  return { type: actionTypes.SEARCH_USER_SUCCESS, user: user };
-};
+// export const searchUserSuccess = user => {
+//   return { type: actionTypes.SEARCH_USER_SUCCESS, user: user };
+// };
 
 export const filterUser = query => {
   console.log("inaction");
   return dispatch => {
     axios
-      .get(`https://api.github.com/search/users?q=user:${query}`)
+      .get(`https://api.github.com/search/users?q=${query}+location:Bangalore`)
       .then(response => {
-        dispatch(searchUserSuccess(response.data));
+        dispatch(fetchUsersSuccess(response.data));
       })
       .catch(error => {
         console.log(error);
